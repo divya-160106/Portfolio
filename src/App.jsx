@@ -3,6 +3,178 @@ import { motion } from "framer-motion";
 import { TypeAnimation } from "react-type-animation";
 import "./index.css";
 
+
+
+//NAVBAR
+
+const navItems = [
+  { label: "HOME", id: "home" },
+  { label: "ABOUT", id: "about" },
+  { label: "SKILLS", id: "skills" },
+  { label: "PROJECTS", id: "projects" },
+  { label: "GAMES", id: "games" },
+  { label: "EXPERIENCE", id: "experience" },
+  { label: "SIDE QUESTS", id: "sidequests" },
+  {label: "EDUCATION", id: "education" },
+  { label: "CONTACT", id: "contact" },
+];
+
+const Navbar = () => {
+  const [active, setActive] = useState("home");
+
+  // smooth scroll on click
+  const handleScroll = (id) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
+  // scroll spy
+useEffect(() => {
+  const sections = navItems
+    .map((item) => document.getElementById(item.id))
+    .filter(Boolean);
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      let bestMatch = null;
+
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          if (
+            !bestMatch ||
+            entry.intersectionRatio > bestMatch.intersectionRatio
+          ) {
+            bestMatch = entry;
+          }
+        }
+      });
+
+      if (bestMatch) {
+        setActive(bestMatch.target.id);
+      }
+    },
+    {
+      root: null,
+      threshold: [0.4, 0.6, 0.8], // multi-level stability
+      rootMargin: "-80px 0px -40% 0px", 
+    }
+  );
+
+  sections.forEach((sec) => observer.observe(sec));
+
+  return () => observer.disconnect();
+}, []);
+
+  return (
+    <nav className="retro-navbar">
+      <div className="navbar-shell">
+
+        <div className="navbar-title">
+          {"Portfolio >>>"}
+        </div>
+
+        <div className="navbar-items">
+          {navItems.map((item) => (
+            <div
+              key={item.id}
+              className={`nav-item ${active === item.id ? "active" : ""}`}
+              onClick={() => handleScroll(item.id)}
+            >
+              {item.label}
+            </div>
+          ))}
+        </div>
+
+      </div>
+    </nav>
+  );
+};
+
+//EDUCATION MODULE
+const educationData = [
+  {
+    institute: "Misrimal Navajee Munoth Jain Engineering College",
+    degree: "B.Tech in Computer Science and Business Systems",
+    grade: "CGPA: 9.0",
+    location: "Chennai, Tamil Nadu, India",
+    duration: "06/2023 - 06/2027",
+    tag: "MAIN QUEST",
+    highlight: true,
+  },
+  {
+    institute: "Indira Gandhi National Open University",
+    degree: "B.A. English Literature (Honours)",
+    grade: "",
+    location: "Chennai, Tamil Nadu, India",
+    duration: "06/2023 - 06/2027",
+    tag: "SIDE QUEST",
+    highlight: false,
+  },
+];
+
+const Education = () => {
+  return (
+    <section id="education" className="education-section">
+      <div className="container">
+
+        <h2 className="education-title">EDUCATION</h2>
+
+        <div className="education-timeline">
+
+          {educationData.map((item, index) => (
+            <div
+              className={`education-item ${
+                item.highlight ? "main" : "side"
+              }`}
+              key={index}
+            >
+
+              <div className="education-node"></div>
+
+              <div className="education-card">
+
+                <div className="education-tag">
+                  {item.tag}
+                </div>
+
+                <h3 className="education-institute">
+                  {item.institute}
+                </h3>
+
+                <div className="education-degree">
+                  {item.degree}
+                </div>
+
+                {item.grade && (
+                  <div className="education-grade">
+                    {item.grade}
+                  </div>
+                )}
+
+                <div className="education-meta">
+                  {item.location}
+                </div>
+
+                <div className="education-duration">
+                  {item.duration}
+                </div>
+
+              </div>
+
+            </div>
+          ))}
+
+        </div>
+
+      </div>
+    </section>
+  );
+};
+
+
+
 /* =========================
    TYPING CHALLENGE
 ========================= */
@@ -181,6 +353,94 @@ function TinyFlappy() {
   );
 }
 
+//SKILLS MODULE
+
+const skillsData = [
+  {
+    category: "Languages",
+    items: ["Python", "JavaScript", "C", "C++"],
+    color: "yellow",
+  },
+  {
+    category: "Frontend",
+    items: ["React.js", "HTML5", "CSS3", "Tailwind CSS", "Vite", "Figma"],
+    color: "blue",
+  },
+  {
+    category: "Backend",
+    items: ["Node.js", "Express.js", "REST APIs", "JWT Auth"],
+    color: "green",
+  },
+  {
+    category: "Databases",
+    items: ["MongoDB", "SQL", "Firebase"],
+    color: "purple",
+  },
+  {
+    category: "Core CS",
+    items: ["DSA", "OOPs", "OS", "DBMS"],
+    color: "pink",
+  },
+  {
+    category: "Tools",
+    items: ["Python Selenium Library","Git", "GitHub", "Postman", "Power BI"],
+    color: "orange",
+  },
+];
+
+const Skills = () => {
+  const [activeIndex, setActiveIndex] = useState(1);
+
+  const active = skillsData[activeIndex];
+
+  return (
+    <section id="skills" className="section skills-console">
+      <div className="container">
+
+        <h2 className="card-title">SKILLS</h2>
+
+        <div className="skills-console-layout">
+
+          {/* LEFT MENU */}
+          <div className="skills-menu">
+            {skillsData.map((item, idx) => (
+              <div
+                key={idx}
+                className={`menu-item ${activeIndex === idx ? "active" : ""}`}
+                onClick={() => setActiveIndex(idx)}
+              >
+                {item.category}
+              </div>
+            ))}
+          </div>
+
+          {/* MAIN DISPLAY */}
+          <div className="skills-display">
+
+            <div className={`display-header ${active.color}`}>
+              {active.category}
+            </div>
+
+            <div className="display-grid">
+              {active.items.map((skill, idx) => (
+                <div key={idx} className="display-skill">
+                  <span className="dot">▹</span>
+                  {skill}
+                </div>
+              ))}
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+  );
+};
+
+
+// EXPERIENCE MODULE
 const experiences = [
   {
     company: "DonutTech Private Limited",
@@ -205,33 +465,12 @@ const experiences = [
       "Connected products to classifiers, strengthening backend integration skills."
     ]
   },
-  {
-    company: "Prodigy Infotech",
-    role: "Android Developer Intern • Chennai, India",
-    date: "01/04/2025 – 30/04/2025",
-    points: [
-      "Created projects for the Android operating system.",
-      "Established clear system performance standards.",
-      "Developed strategies to maximize performance and lifespan of application systems.",
-      "Tested code and identified bugs during development cycles."
-    ]
-  },
-  {
-    company: "Retech Solutions",
-    role: "Machine Learning Intern • Chennai, India",
-    date: "17/02/2025 – 18/03/2025",
-    points: [
-      "Improved scalability of deep learning models and built analysis tools.",
-      "Created graphs and charts for data insights.",
-      "Performed feature engineering to improve model performance.",
-      "Cleaned and processed raw data and evaluated models using accuracy, precision, and recall."
-    ]
-  }
 ];
+
 
 export function Experience() {
   return (
-    <section className="experience-section">
+    <section id="experience" className="experience-section">
       {/* ADDED CONTAINER HERE TO FIX THE WIDTH */}
       <div className="experience-container">
         
@@ -269,13 +508,162 @@ export function Experience() {
   );
 }
 
+const traineeExperiences = [
+  {
+    company: "Prodigy Infotech",
+    companyUrl: "https://drive.google.com/file/d/1hIHBRdzLi4uVdHfyC28fZbeWnLr9BxNs/view?usp=sharing",
+    role: "Android Developer Intern",
+    certUrl: "https://drive.google.com/file/d/1hI8Fb99XGZgbzZJ5blURV3DvNxFND7hm/view?usp=sharing",
+    location: "Chennai, India",
+    duration: "01/04/2025 – 30/04/2025",
+  },
+  {
+    company: "Retech Solutions",
+    companyUrl: "https://retechsolutions.in/",
+    role: "Machine Learning Intern",
+    certUrl: "https://drive.google.com/file/d/15XmPD3St2_Da6VvF8LGGH5hRr3qR1F1F/view?usp=sharing",
+    location: "Chennai, India",
+    duration: "17/02/2025 – 18/03/2025",
+  },
+];
 export default function App() {
 
   const [input, setInput] = useState("");
+  const [terminalInput, setTerminalInput] = useState("");
+  const [terminalHistory, setTerminalHistory] = useState([
+    {
+      command: "help",
+      output: `
+      Available commands:
+      help
+      whoami
+      skills
+      projects
+      internships
+      resume
+      contact
+      clear
+      `,
+        },
+      ]);
 
-  const [startTime, setStartTime] =
-    useState(null);
+    const terminalCommands = {
+    help: `
+    Available commands:
+    help
+    whoami
+    skills
+    projects
+    internships
+    certifications
+    resume
+    contact
+    clear
+    `,
 
+      whoami: `
+    Computer Science student focused on AI,
+    Machine Learning, and Full-Stack Development.
+    `,
+
+      skills: `
+    Python
+    React
+    FastAPI
+    OpenCV
+    MongoDB
+    Machine Learning
+    Computer Vision
+    `,
+
+      projects: `
+    - LogisticAI
+    - Zozu Photobooth
+    - Aircraft Tracking System
+    - Fabric Classifier
+    - Emotion Analyzer
+    `,
+
+      internships: `
+    - Software Developer Intern
+      DonutTech
+    - IoT Intern
+      Sortyx Ventures
+    - Machine Learning Intern
+      Retech Solutions
+    - Android Developer Intern
+      Prodigy Infotech
+    - UI/UX Designer Intern
+      TechVedhu
+    `,
+
+      certifications: `
+    - Silver Elite — Python for Data Science
+      NPTEL, IIT Madras
+    - Linux Programming
+      Anna University, Guindy
+    - Recent Developments in AI (Bootcamp)
+      Smarted
+    - Python Programming
+      Infosys Springboard
+    - Advanced Diplomat — Music & Violin
+      BSS University
+    - Violin Grade V
+      Annamalai University
+    `,
+
+      contact: `
+    Email:
+    divyasreem1601@gmail.com
+
+    GitHub:
+    github.com/divya-160106
+    `,
+    };
+
+    const handleTerminalCommand = (e) => {
+    e.preventDefault();
+
+    const cmd = terminalInput.trim().toLowerCase();
+
+    if (!cmd) return;
+
+    if (cmd === "clear") {
+      setTerminalHistory([]);
+      setTerminalInput("");
+      return;
+    }
+
+    if (cmd === "resume") {
+      window.open("/Divyasree Manikandan.pdf", "_blank");
+
+      setTerminalHistory((prev) => [
+        ...prev,
+        {
+          command: cmd,
+          output: "Opening resume...",
+        },
+      ]);
+
+      setTerminalInput("");
+      return;
+    }
+
+    setTerminalHistory((prev) => [
+      ...prev,
+      {
+        command: cmd,
+        output:
+          terminalCommands[cmd] ||
+          "Command not found. Type 'help'.",
+      },
+    ]);
+
+    setTerminalInput("");
+  };
+
+  // roasting logic
+  const [startTime, setStartTime] =useState(null);
   const [lpm, setLpm] = useState(0);
 
 
@@ -360,58 +748,66 @@ useEffect(() => {
 
   const [currentProject, setCurrentProject] = useState(0);
   const projects = [
-
   {
-    title: "Aircraft Detection",
+    title: "Zozu Photobooth",
+    tech: "React+Vite • Flask • Cloudinary • React Webcam • QR Code Generation",
+    year: "2026",
+    description:"Developed a full-stack photobooth application featuring webcam capture, themed filters, polaroid-style photo generation, cloud uploads, and QR-based photo sharing directly from the browser.",
+    vibe:"Bringing the photobooth experience to the web.",
+    link: "https://zozu-photobooth.vercel.app",
+  },
 
-    tech: "Python • OpenCV • YOLO",
-
-    year: "2025",
-
-    description:
-      "Built a real-time aircraft detection system using computer vision and object detection models focused on realtime inference, tracking accuracy, and visual processing pipelines.",
-
-    vibe:
-      "Teaching machines how to observe the sky in realtime.",
+  
+  {
+    title: "Logistic AI",
+    tech: "React • FastAPI • MongoDB • WebSockets • Leaflet.js • Reinforcement Learning",
+    year: "2026",
+    description:"Built an enterprise-style logistics optimization platform featuring AI-powered route planning, interactive mapping, real-time updates, environmental constraints, and reinforcement learning–based decision making for dispatch operations.",
+    vibe:"Teaching routes to think before they drive.",
+    link: "https://logistic-ai-swart.vercel.app",
   },
 
   {
-    title: "Sentiment Analysis",
-
-    tech: "Python • NLP • Machine Learning",
-
-    year: "2024",
-
-    description:
-      "Developed NLP models capable of identifying emotional tone and sentiment from textual data using preprocessing, tokenization, and classification workflows.",
-
-    vibe:
-      "Proof that humans hide emotions inside text messages.",
-  },
-
-  {
-    title: "Fabric Detection",
-
-    tech: "TensorFlow • CNN • ResNet50",
-
-    year: "2025",
-
-    description:
-      "Built a deep learning image classification system for identifying fabric categories using transfer learning and convolutional neural network architectures.",
-
-    vibe:
-      "Turns out neural networks can develop fashion opinions too.",
-  },
+  title: "Aircraft Tracking System",
+  tech: "Python • OpenCV • NumPy • SciPy • Computer Vision • Motion Analysis",
+  year: "2025",
+  description:
+    "Developed a real-time aircraft tracking system that detects airborne objects from video streams, estimates velocity, calculates spatial positioning, and predicts future flight trajectories using computer vision and motion analysis techniques.",
+  vibe:
+    "Teaching machines to anticipate where the sky moves next.",
+  link: "https://github.com/divya-160106/Aircraft-detection",
+},
+{
+  title: "Fabric Type Classifier",
+  tech: "Python • TensorFlow • Keras • ResNet50 • OpenCV • Transfer Learning • Image Augmentation",
+  year: "2025",
+  description:
+    "Built a deep learning pipeline to classify fabric types — Cotton, Wool, Rayon, and Silk — from images using a fine-tuned ResNet50 model with progressive layer unfreezing, custom augmentation, and confidence-based bar chart outputs.",
+  vibe:
+    "Making neural networks feel the difference between silk and cotton.",
+  link: "https://github.com/divya-160106/Fabric-detection",
+},
+{
+  title: "Multimodal Emotion Analyzer",
+  tech: "Python • OpenCV • FER • NLTK • VADER • Pandas • Matplotlib • NLP • Computer Vision",
+  year: "2025",
+  description:
+    "Designed a multimodal emotion detection system that analyzes facial expressions from images and sentiment from text, combining both signals to identify dominant emotional states and deliver personalized wellness responses.",
+  vibe:
+    "Because how you look and what you say both tell a story.",
+  link: "https://github.com/divya-160106/Sentimment-Analysis",
+},
 
 ];
 
   return (
 
     <main>
+      <Navbar />
 
       {/* HERO */}
 
-      <section className="section">
+      <section id= "home" className="section">
 
         <div className="container">
 
@@ -466,17 +862,24 @@ useEffect(() => {
 
               Exploring the intersection of
               machine learning, creativity,
-              storytelling, and software.
+              storytelling, and software engineering.
 
             </p>
 
             <div className="button-row">
 
-              <button className="primary-button">
-                Explore Build Lab
+              <button
+                className="primary-button"
+                onClick={() =>
+                  document
+                    .getElementById("experience")
+                    ?.scrollIntoView({ behavior: "smooth" })
+                }
+              >
+                Experience
               </button>
 
-              <a href="/Resume.pdf" download className="secondary-button">
+              <a href="/Divyasree Manikandan.pdf" download className="secondary-button">
                 Get Resume
               </a>
 
@@ -490,7 +893,7 @@ useEffect(() => {
 
       {/* DASHBOARD */}
 
-      <section className="section">
+      <section id="about" className="section">
 
         <div className="container grid-3">
 
@@ -523,23 +926,27 @@ useEffect(() => {
           >
 
             <div className="card-title">
-              current status
+              <a
+              href="#projects"
+              style={{
+                color: "inherit",
+                textDecoration: "none",
+              }}
+            >
+                zozu
+              </a>
+               - take a photo
             </div>
 
-            <div className="card-text">
-
-              <p>building ML systems</p>
-              <br />
-
-              <p>writing a novel</p>
-              <br />
-
-              <p>practicing violin</p>
-              <br />
-
-              <p>surviving engineering</p>
-
-            </div>
+            <iframe
+            src="https://zozu-photobooth.vercel.app"
+            width="100%"
+            height="352"
+            style={{ borderRadius: "16px" }}
+            frameBorder="0"
+            allow="camera; microphone; autoplay; clipboard-write; fullscreen"
+            loading="lazy"
+          />
 
           </motion.div>
 
@@ -547,83 +954,57 @@ useEffect(() => {
             whileHover={{ y: -6 }}
             className="card"
           >
-
             <div className="card-title">
-              achievements
+              terminal.exe
             </div>
 
-            <div className="card-text">
+            <div className="terminal-window">
 
-              <p>Karate Blackbelt</p>
-              <br />
+              {terminalHistory.map((entry, i) => (
+                <div key={i}>
 
-              <p>Certified Violinist</p>
-              <br />
+                  <div className="terminal-line">
+                    divya@portfolio:~$ {entry.command}
+                  </div>
 
-              <p>Published Co-author</p>
-              <br />
+                  <pre className="terminal-output">
+                    {entry.output}
+                  </pre>
 
-              <p>ML Intern</p>
+                </div>
+              ))}
+
+              <form className="terminal-form" onSubmit={handleTerminalCommand}>
+
+                <span className="terminal-prompt">
+                  divya@portfolio:~$
+                </span>
+
+                <input
+                  value={terminalInput}
+                  onChange={(e) =>
+                    setTerminalInput(e.target.value)
+                  }
+                  className="terminal-input"
+                  autoComplete="off"
+                  spellCheck={false}
+                />
+
+              </form>
 
             </div>
-
           </motion.div>
 
         </div>
 
       </section>
 
-      {/* GAMES */}
+      <Skills />
 
-      <section className="section">
-
-        <div className="container grid-2">
-
-          <TinyFlappy />
-
-          <motion.div
-            whileHover={{ y: -6 }}
-            className="card"
-          >
-
-            <div className="card-title">
-              typing challenge
-            </div>
-
-            <div className="small-text">
-              race against your own overthinking.
-            </div>
-
-            <div className="code-box">
-              {TARGET}
-            </div>
-
-            <input
-              value={input}
-              onChange={(e) =>
-                setInput(e.target.value)
-              }
-              placeholder="type the paragraph here..."
-              className="typing-input"
-            />
-
-            <div className="small-text">
-              LPM: {lpm || 0}
-            </div>
-
-            <div className="small-text">
-              {roast}
-            </div>
-
-          </motion.div>
-
-        </div>
-
-      </section>
 
       {/* PROJECT MODULE */}
 
-<section className="section">
+<section id="projects" className="section">
 
   <div className="container">
 
@@ -717,12 +1098,17 @@ useEffect(() => {
         “{projects[currentProject].vibe}”
 
       </div>
-
+    <a
+      href={projects[currentProject].link}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
       <button className="project-button">
 
         Open Project →
 
       </button>
+    </a>
 
     </motion.div>
 
@@ -730,11 +1116,60 @@ useEffect(() => {
 
 </section>
 
-<Experience />
+{/* GAMES */}
+
+      <section id="games" className="section">
+
+        <div className="container grid-2">
+
+          <TinyFlappy />
+
+          <motion.div
+            whileHover={{ y: -6 }}
+            className="card"
+          >
+
+            <div className="card-title">
+              typing challenge
+            </div>
+
+            <div className="small-text">
+              race against your own overthinking.
+            </div>
+
+            <div className="code-box">
+              {TARGET}
+            </div>
+
+            <input
+              value={input}
+              onChange={(e) =>
+                setInput(e.target.value)
+              }
+              placeholder="type the paragraph here..."
+              className="typing-input"
+            />
+
+            <div className="small-text">
+              LPM: {lpm || 0}
+            </div>
+
+            <div className="small-text">
+              {roast}
+            </div>
+
+          </motion.div>
+
+        </div>
+
+      </section>
+
+    <Experience />
+
 
       {/* SIDE QUESTS */}
 
-      <section className="section">
+      <section id="sidequests" className="section">
 
         <div className="container">
 
@@ -772,9 +1207,10 @@ useEffect(() => {
 
       </section>
 
+<Education />
         {/* CONTACT */}
 
-<section className="section">
+<section id="contact" className="section">
 
   <div className="contact-card">
 
@@ -833,6 +1269,11 @@ useEffect(() => {
     </div>
 
   </div>
+
+  <div className="contact-footer">
+    © 2026 Divyasree Manikandan. All rights reserved.
+  </div>
+
 
 </section>
 

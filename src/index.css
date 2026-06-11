@@ -706,6 +706,20 @@ main {
 
 .contact-button:active { transform: translate(1px, 1px); }
 
+.contact-footer {
+  margin-top: 28px;
+  text-align: center;
+
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.75rem;
+
+  color: rgba(136, 136, 187, 0.7);
+  letter-spacing: 0.08em;
+
+  padding-bottom: 30px;
+}
+
+
 /* ─── PROJECTS ───────────────────────────────────────────────── */
 
 .project-header {
@@ -1025,4 +1039,484 @@ main {
   position: absolute;
   left: 0;
   color: var(--yellow);
+}
+
+
+
+/* ─── CONSOLE LAYOUT ───────────────────────────── */
+
+.skills-console {
+  padding: 110px 24px;
+}
+
+.skills-console-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 24px;
+}
+
+@media (max-width: 900px) {
+  .skills-console-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ─── LEFT MENU (GAME SELECTOR) ───────────────────────────── */
+
+.skills-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  border: 2px solid var(--border);
+  background: var(--bg-soft);
+  padding: 12px;
+
+  box-shadow:
+    inset 1px 1px 0 rgba(255,255,255,0.05),
+    4px 4px 0 rgba(0,0,0,0.6);
+}
+
+.menu-item {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.85rem;
+
+  padding: 10px;
+  cursor: pointer;
+
+  display: flex;
+  gap: 10px;
+  align-items: center;
+
+  color: var(--muted);
+
+  transition: 0.15s steps(2);
+
+  border-left: 3px solid transparent;
+}
+
+.menu-item:hover {
+  color: var(--text);
+  transform: translateX(2px);
+}
+
+.menu-item.active {
+  color: var(--yellow);
+  border-left: 3px solid var(--yellow);
+  background: rgba(245,200,66,0.06);
+}
+
+.menu-icon {
+  font-size: 1rem;
+}
+
+/* category colors */
+.menu-icon.yellow { color: var(--yellow); }
+.menu-icon.blue   { color: var(--blue); }
+.menu-icon.green  { color: var(--green); }
+.menu-icon.purple { color: var(--purple); }
+.menu-icon.pink   { color: var(--pink); }
+.menu-icon.orange { color: var(--orange); }
+
+/* ─── MAIN DISPLAY PANEL ───────────────────────────── */
+
+.skills-display {
+  border: 2px solid var(--border);
+  background: var(--card);
+  padding: 28px;
+
+  position: relative;
+
+  box-shadow:
+    inset 1px 1px 0 rgba(255,255,255,0.05),
+    6px 6px 0 rgba(0,0,0,0.6);
+}
+
+/* header strip */
+.display-header {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.7rem;
+
+  margin-bottom: 24px;
+
+  padding-bottom: 10px;
+  border-bottom: 2px dashed rgba(136,136,187,0.3);
+}
+
+/* animated glow per category */
+.display-header.yellow { color: var(--yellow); }
+.display-header.blue   { color: var(--blue); }
+.display-header.green  { color: var(--green); }
+.display-header.purple { color: var(--purple); }
+.display-header.pink   { color: var(--pink); }
+.display-header.orange { color: var(--orange); }
+
+/* ─── SKILL LIST (ANIMATED REVEAL FEEL) ───────────────────────────── */
+
+.display-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* each skill line = “terminal output” */
+.display-skill {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.9rem;
+
+  color: rgba(240,230,200,0.8);
+
+  display: flex;
+  gap: 10px;
+
+  animation: skillPop 0.25s steps(3);
+}
+
+/* little arcade pointer */
+.dot {
+  color: var(--yellow);
+}
+
+/* pop-in effect when switching category */
+@keyframes skillPop {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* ─── NAVBAR BASE ───────────────────────────── */
+
+.retro-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
+
+  padding: 14px 18px;
+
+  background: rgba(14, 14, 44, 0.85);
+  backdrop-filter: blur(6px);
+
+  border-bottom: 2px solid var(--border);
+
+  box-shadow:
+    inset 0 -1px 0 rgba(255,255,255,0.04),
+    0 6px 0 rgba(0,0,0,0.4);
+}
+
+/* inner shell = “game HUD bar” */
+.navbar-shell {
+  max-width: 1350px;
+  margin: auto;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* ─── TITLE (SYSTEM LABEL) ───────────────────────────── */
+
+.navbar-title {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.7rem;
+  color: var(--yellow);
+  letter-spacing: 0.1em;
+
+  text-shadow:
+    2px 2px 0 #7a3e00,
+    0 0 12px rgba(245,200,66,0.2);
+}
+
+/* ─── NAV ITEMS ───────────────────────────── */
+
+.navbar-items {
+  display: flex;
+  gap: 6px;
+}
+
+/* each nav button = arcade tile */
+.nav-item {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.75rem;
+
+  padding: 8px 12px;
+
+  color: var(--muted);
+  cursor: pointer;
+
+  border: 1px solid rgba(58,58,122,0.6);
+  background: rgba(28,28,72,0.4);
+
+  position: relative;
+
+  transition:
+    transform 0.12s steps(2),
+    border-color 0.12s steps(2),
+    color 0.12s steps(2);
+}
+
+/* hover = arcade selection glow */
+.nav-item:hover {
+  color: var(--yellow);
+  border-color: var(--yellow);
+  transform: translateY(-2px);
+}
+
+/* active = “selected menu slot” */
+.nav-item.active {
+  color: var(--black);
+  border-color: very transparent rgba(245,200,66,0.4);
+  background: var(--yellow);
+
+  box-shadow:
+    inset 0 0 10px rgba(82,170,255,0.12),
+    3px 3px 0 rgba(0,0,0,0.5);
+}
+
+
+
+/* activate sweep only on hover */
+.nav-item:hover::after {
+  animation: navSweep 0.6s steps(6);
+  opacity: 1;
+}
+
+@keyframes navSweep {
+  0% { left: -120%; }
+  100% { left: 160%; }
+}
+
+/* click feel */
+.nav-item:active {
+  transform: translateY(0px);
+}
+
+
+/*EDUCATION SECTION*/
+
+/* ─── SECTION WRAPPER ───────────────────────────── */
+
+.education-section {
+  padding: 110px 24px;
+}
+
+/* ─── TITLE ───────────────────────────── */
+
+.education-title {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 1.1rem;
+
+  color: var(--yellow);
+
+  margin-bottom: 40px;
+
+  text-shadow:
+    2px 2px 0 #7a3e00;
+}
+
+/* ─── TIMELINE ───────────────────────────── */
+
+.education-timeline {
+  position: relative;
+  margin-left: 20px;
+  padding-left: 30px;
+
+  border-left: 2px dashed rgba(136,136,187,0.35);
+}
+
+/* ─── ITEM WRAPPER ───────────────────────────── */
+
+.education-item {
+  position: relative;
+  margin-bottom: 40px;
+}
+
+/* NODE (timeline dot) */
+.education-node {
+  position: absolute;
+  left: -39px;
+  top: 18px;
+
+  width: 12px;
+  height: 12px;
+
+  border: 2px solid var(--bg);
+  background: var(--blue);
+
+  box-shadow: 0 0 10px rgba(82,170,255,0.4);
+}
+
+/* MAIN vs SIDE color coding */
+.education-item.main .education-node {
+  background: var(--yellow);
+}
+
+.education-item.side .education-node {
+  background: var(--purple);
+}
+
+/* ─── CARD ───────────────────────────── */
+
+.education-card {
+  padding: 20px 22px;
+
+  background: rgba(28, 28, 72, 0.45);
+  border: 1px solid rgba(58, 58, 122, 0.6);
+
+  box-shadow:
+    inset 1px 1px 0 rgba(255,255,255,0.05),
+    4px 4px 0 rgba(0,0,0,0.5);
+
+  transition: transform 0.15s steps(2), border-color 0.15s steps(2);
+}
+
+/* hover = quest highlight */
+.education-card:hover {
+  transform: translateX(4px);
+  border-color: var(--yellow);
+}
+
+
+.education-tag {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.6rem;
+
+  letter-spacing: 0.12em;
+
+  margin-bottom: 12px;
+
+  color: var(--muted);
+}
+
+.education-item.main .education-tag {
+  color: var(--yellow);
+}
+
+
+.education-institute {
+  font-family: 'VT323', monospace;
+  font-size: 2rem;
+
+  color: var(--text);
+
+  margin-bottom: 10px;
+
+  text-shadow: 2px 2px 0 rgba(0,0,0,0.6);
+}
+
+.education-degree {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.9rem;
+
+  color: rgba(240,230,200,0.8);
+
+  margin-bottom: 8px;
+}
+
+.education-grade {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.85rem;
+
+  color: var(--green);
+
+  margin-bottom: 8px;
+}
+
+.education-meta {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.78rem;
+
+  color: var(--muted);
+
+  margin-bottom: 4px;
+}
+
+.education-duration {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.75rem;
+
+  color: rgba(136,136,187,0.7);
+}
+
+.education-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255,255,255,0.05),
+    transparent
+  );
+
+  opacity: 0;
+  pointer-events: none;
+}
+
+.education-card:hover::after {
+  opacity: 1;
+  animation: eduGlitch 0.6s steps(6);
+}
+
+@keyframes eduGlitch {
+  from { transform: translateX(-120%); }
+  to { transform: translateX(120%); }
+}
+
+.terminal-window {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.85rem;
+  height: 350px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 4px 0;
+}
+
+.terminal-line {
+  margin-top: 8px;
+  color: var(--green);
+  word-break: break-all;
+}
+
+.terminal-output {
+  white-space: pre-wrap;
+  margin: 4px 0 8px 0;
+  opacity: 0.8;
+  word-break: break-word;
+  color: var(--text);
+  padding-left: 0;
+}
+
+.terminal-prompt {
+  margin-right: 8px;
+  flex-shrink: 0;
+  color: var(--green);
+}
+
+.terminal-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--yellow);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.85rem;
+  flex: 1;
+  min-width: 0;
+  caret-color: var(--yellow);
+}
+
+.terminal-form {
+  display: flex;
+  align-items: center;
+  margin-top: 8px;
+  flex-shrink: 0;
 }
