@@ -635,7 +635,7 @@ export default function App() {
     }
 
     if (cmd === "resume") {
-      window.open("/Divyasree Manikandan.pdf", "_blank");
+      window.open("/Divyasree-Manikandan.pdf", "_blank");
 
       setTerminalHistory((prev) => [
         ...prev,
@@ -879,7 +879,7 @@ useEffect(() => {
                 Experience
               </button>
 
-              <a href="/Divyasree Manikandan.pdf" download className="secondary-button">
+              <a href="/Divyasree-Manikandan.pdf" download className="secondary-button">
                 Get Resume
               </a>
 
