@@ -302,7 +302,7 @@ function TinyFlappy() {
             flappy burnout
           </div>
           <div className="small-text">
-            press SPACE to jump
+            press SPACE or TAP to jump
           </div>
         </div>
         <div className="score">
@@ -338,7 +338,7 @@ function TinyFlappy() {
           </div>
 
           <div className="restart-text">
-            press SPACE to restart
+            press SPACE or TAP to restart
           </div>
 
         </div>
