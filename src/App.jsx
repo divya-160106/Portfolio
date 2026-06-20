@@ -174,13 +174,7 @@ const Education = () => {
 };
 
 
-
-/* =========================
-   TYPING CHALLENGE
-========================= */
-
-const TARGET =
-  "I opened this typing test with confidence and now I am aggressively fighting for my life against a paragraph and my own keyboard.";
+// FLAPPY BIRD GAME
 
 function TinyFlappy() {
   const [birdY, setBirdY] = useState(100);
@@ -188,6 +182,15 @@ function TinyFlappy() {
   const [gameOver, setGameOver] = useState(false);
   const [score, setScore] = useState(0);
   const [blockX, setBlockX] = useState(500);
+
+  const handleJump = () => {
+  if (gameOver) {
+    resetGame();
+    return;
+  }
+
+  setVelocity(jump);
+};
 
   const [blockY, setBlockY] = useState(
     Math.floor(Math.random() * 120) + 40
@@ -254,7 +257,7 @@ function TinyFlappy() {
   }, [velocity, gameOver]);
 
   useEffect(() => {
-    const handleJump = (e) => {
+    const handleKeyDown = (e) => {
       const active = document.activeElement;
 
       if (
@@ -268,52 +271,44 @@ function TinyFlappy() {
       if (e.code === "Space") {
         e.preventDefault();
 
-        if (gameOver) {
-          resetGame();
-          return;
-        }
-
-        setVelocity(jump);
+        handleJump();
       }
     };
 
-    window.addEventListener("keydown", handleJump);
+    window.addEventListener("keydown", handleKeyDown);
 
     return () =>
       window.removeEventListener(
         "keydown",
-        handleJump
+        handleKeyDown
       );
   }, [gameOver]);
 
   return (
     <div
-  className="card"
-  style={{
-    height: "330px",
-    overflow: "hidden",
-    position: "relative",
-  }}
->
-
+      className="card"
+      onClick={handleJump}
+      style={{
+        height: "330px",
+        overflow: "hidden",
+        position: "relative",
+        touchAction: "manipulation",
+        cursor: "pointer",
+      }}
+    >
       <div className="flappy-header">
-
         <div>
           <div className="card-title">
             flappy burnout
           </div>
-
           <div className="small-text">
             press SPACE to jump
           </div>
         </div>
-
         <div className="score">
           {score}
         </div>
-
       </div>
-
       <div
         className="bird"
         style={{
@@ -507,7 +502,7 @@ export function Experience() {
     </section>
   );
 }
-
+// TRAINEE EXPERIENCES
 const traineeExperiences = [
   {
     company: "Prodigy Infotech",
@@ -526,10 +521,12 @@ const traineeExperiences = [
     duration: "17/02/2025 – 18/03/2025",
   },
 ];
+
 export default function App() {
 
   const [input, setInput] = useState("");
   const [terminalInput, setTerminalInput] = useState("");
+  const [chatOpen, setChatOpen] = useState(false);
   const [terminalHistory, setTerminalHistory] = useState([
     {
       command: "help",
@@ -567,16 +564,17 @@ export default function App() {
     `,
 
       skills: `
-    Python
-    React
-    FastAPI
-    OpenCV
-    MongoDB
-    Machine Learning
-    Computer Vision
+    - Python
+    - React
+    - FastAPI
+    - OpenCV
+    - MongoDB
+    - Machine Learning
+    - Computer Vision
     `,
 
       projects: `
+    - Quill (My Personal AI Agent)
     - LogisticAI
     - Zozu Photobooth
     - Aircraft Tracking System
@@ -585,39 +583,26 @@ export default function App() {
     `,
 
       internships: `
-    - Software Developer Intern
-      DonutTech
-    - IoT Intern
-      Sortyx Ventures
-    - Machine Learning Intern
-      Retech Solutions
-    - Android Developer Intern
-      Prodigy Infotech
-    - UI/UX Designer Intern
-      TechVedhu
+    - Software Developer Intern at DonutTech
+    - Web Developer Intern at Sortyx Ventures
+    - Machine Learning Intern at Retech Solutions
+    - Android Developer Intern at Prodigy Infotech
+    - UI/UX Designer Intern at TechVedhu
     `,
 
       certifications: `
-    - Silver Elite — Python for Data Science
-      NPTEL, IIT Madras
-    - Linux Programming
-      Anna University, Guindy
-    - Recent Developments in AI (Bootcamp)
-      Smarted
-    - Python Programming
-      Infosys Springboard
-    - Advanced Diplomat — Music & Violin
-      BSS University
-    - Violin Grade V
-      Annamalai University
+    - Silver Elite — Python for Data Science from NPTEL, IIT Madras
+    - Linux Programming from Anna University, Guindy
+    - Recent Developments in AI (Bootcamp) from Smarted
+    - Python Programming from Infosys Springboard
+    - Advanced Diplomat — Music & Violin from BSS University
+    - Violin Grade V from Annamalai University
     `,
 
       contact: `
-    Email:
-    divyasreem1601@gmail.com
+    - Email: divyasreem1601@gmail.com
 
-    GitHub:
-    github.com/divya-160106
+    - GitHub: github.com/divya-160106
     `,
     };
 
@@ -662,7 +647,9 @@ export default function App() {
     setTerminalInput("");
   };
 
-  // roasting logic
+  // TYPING CHALLENGE
+
+  const TARGET = "I opened this typing test with confidence and now I am aggressively fighting for my life against a paragraph and my own keyboard.";
   const [startTime, setStartTime] =useState(null);
   const [lpm, setLpm] = useState(0);
 
@@ -690,6 +677,7 @@ useEffect(() => {
       ? "your keyboard is fearing for its life."
       : "calm down hacker protagonist.";
 
+//SIDE QUESTS
   const quests = [
     {
       title: "Published Co-Author",
@@ -746,8 +734,21 @@ useEffect(() => {
     },
   ];
 
+  //PROJECTS
   const [currentProject, setCurrentProject] = useState(0);
   const projects = [
+
+   {
+    title: "Quill - My AI Agent",
+    tech: "React • LangChain • RAG • ChromaDB • Vite",
+    year: "2026",
+    description:
+      "Built a retrieval-augmented generation (RAG) AI chatbot that answers questions about my projects, skills, and background by embedding portfolio content into ChromaDB and querying it through a LangChain pipeline. Includes a React-based chat interface for natural conversation and modular retrieval architecture for future data sources.",
+    vibe: "Your intelligent portfolio companion that actually understands you.",
+    link: "https://quill-aiagent.vercel.app",
+    glink: "https://github.com/divya-160106/Quill"
+  },
+
   {
     title: "Zozu Photobooth",
     tech: "React+Vite • Flask • Cloudinary • React Webcam • QR Code Generation",
@@ -755,6 +756,7 @@ useEffect(() => {
     description:"Developed a full-stack photobooth application featuring webcam capture, themed filters, polaroid-style photo generation, cloud uploads, and QR-based photo sharing directly from the browser.",
     vibe:"Bringing the photobooth experience to the web.",
     link: "https://zozu-photobooth.vercel.app",
+    glink:"https://github.com/divya-160106/Photobooth",
   },
 
   
@@ -765,6 +767,7 @@ useEffect(() => {
     description:"Built an enterprise-style logistics optimization platform featuring AI-powered route planning, interactive mapping, real-time updates, environmental constraints, and reinforcement learning–based decision making for dispatch operations.",
     vibe:"Teaching routes to think before they drive.",
     link: "https://logistic-ai-swart.vercel.app",
+    glink: "https://github.com/divya-160106/Logistic-AI",
   },
 
   {
@@ -964,7 +967,7 @@ useEffect(() => {
                 <div key={i}>
 
                   <div className="terminal-line">
-                    divya@portfolio:~$ {entry.command}
+                    divya@os:~$ {entry.command}
                   </div>
 
                   <pre className="terminal-output">
@@ -977,7 +980,7 @@ useEffect(() => {
               <form className="terminal-form" onSubmit={handleTerminalCommand}>
 
                 <span className="terminal-prompt">
-                  divya@portfolio:~$
+                  divya@os:~$
                 </span>
 
                 <input
@@ -1098,17 +1101,29 @@ useEffect(() => {
         “{projects[currentProject].vibe}”
 
       </div>
-    <a
-      href={projects[currentProject].link}
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      <button className="project-button">
+    <div className="project-buttons">
 
+      <button
+        className="project-button"
+        onClick={() =>
+          window.open(projects[currentProject].link, "_blank")
+        }
+      >
         Open Project →
-
       </button>
-    </a>
+
+      {projects[currentProject].glink && (
+        <button
+          className="project-button"
+          onClick={() =>
+            window.open(projects[currentProject].glink, "_blank")
+          }
+        >
+          Open GitHub →
+        </button>
+      )}
+
+    </div>
 
     </motion.div>
 
@@ -1166,6 +1181,67 @@ useEffect(() => {
 
     <Experience />
 
+    {/* TRAINEE EXPERIENCES */}
+    <section className="experience-section">
+    <div className="experience-container">
+
+      <h2 className="card-title">
+        Traineeships
+      </h2>
+
+      <div className="experience-list">
+
+        {traineeExperiences.map((exp, index) => (
+          <div
+            key={index}
+            className="experience-card"
+          >
+
+            <div className="experience-role">
+              {exp.role}
+            </div>
+
+            <h3 className="experience-company">
+              <a
+                href={exp.companyUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  color: "inherit",
+                  textDecoration: "none",
+                }}
+              >
+                {exp.company}
+              </a>
+            </h3>
+
+            <div className="experience-date">
+              {exp.duration}
+            </div>
+
+            <div className="small-text">
+              📍 {exp.location}
+            </div>
+
+            <br />
+
+            <a
+              href={exp.certUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <button className="project-button">
+                View Certificate →
+              </button>
+            </a>
+
+          </div>
+        ))}
+
+      </div>
+
+    </div>
+  </section>
 
       {/* SIDE QUESTS */}
 
@@ -1208,6 +1284,7 @@ useEffect(() => {
       </section>
 
 <Education />
+
         {/* CONTACT */}
 
 <section id="contact" className="section">
@@ -1276,7 +1353,70 @@ useEffect(() => {
 
 
 </section>
+<motion.div
+  initial={{ opacity: 0, scale: 0.8 }}
+  animate={{ opacity: 1, scale: 1 }}
+  exit={{ opacity: 0, scale: 0.8 }}
+>
+    {/* FLOATING CHATBOT */}
+    <button
+      onClick={() => setChatOpen((prev) => !prev)}
+      style={{
+        position: "fixed",
+        bottom: "20px",
+        right: "20px",
+        width: "60px",
+        height: "60px",
+        borderRadius: "50%",
+        border: "none",
+        cursor: "pointer",
+        background: "#111",
+        color: "white",
+        fontSize: "22px",
+        zIndex: 9999,
+        boxShadow: "0 10px 25px rgba(0,0,0,0.3)",
+        overflow: "hidden",
+      }}
+    >
+      <img
+        src="/Quill.png"
+        alt="chat"
+        style={{
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          borderRadius: "50%",
+          display: "block",
+        }}
+      />
+    </button>
 
-    </main>
+    {chatOpen && (
+      <div
+        style={{
+          position: "fixed",
+          bottom: "90px",
+          right: "20px",
+          width: "360px",
+          height: "520px",
+          background: "white",
+          borderRadius: "12px",
+          overflow: "hidden",
+          zIndex: 9999,
+          boxShadow: "0 10px 30px rgba(0,0,0,0.4)",
+        }}
+      >
+        <iframe
+          src="https://quill-aiagent.vercel.app/"
+          title="chatbot"
+          width="100%"
+          height="100%"
+          style={{ border: "none" }}
+        />
+      </div>
+    )}
+    </motion.div>
+  </main>
+    
   );
 }
