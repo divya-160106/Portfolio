@@ -620,16 +620,18 @@ export default function App() {
     }
 
     if (cmd === "resume") {
-      window.open("/Divyasree-Manikandan.pdf", "_blank");
+      const link = document.createElement("a");
+      link.href = "/Divyasree-Manikandan.pdf";
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
 
       setTerminalHistory((prev) => [
         ...prev,
-        {
-          command: cmd,
-          output: "Opening resume...",
-        },
+        { command: cmd, output: "Opening resume..." },
       ]);
-
       setTerminalInput("");
       return;
     }
